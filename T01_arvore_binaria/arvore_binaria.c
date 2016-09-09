@@ -47,8 +47,6 @@ void inserirFolha(raiz **arvore, int valor){
   inserirFolha(&(*arvore)->dir, valor);
 }
 
-
-
 void imprimeArvore(raiz *arvore, int nivel){
   if (arvore == NULL) return ;
   imprimePonto(nivel * 2 + 2);
@@ -118,13 +116,9 @@ raiz* remover(raiz *arvore, int num){
     arvore->dir = remover(arvore->dir, num);
   }else{
     //caso 3
-    esqTemp = arvore->esq;
-    dirTemp = arvore->dir;
-    remTemp = maiorEsquerda(esqTemp);
+    remTemp = maiorEsquerda(arvore->esq);
     arvore->valor = remTemp->valor;
-    esqTemp = remover(esqTemp, arvore->valor);
-    arvore->esq = esqTemp;
-    arvore->dir = dirTemp;
+    arvore->esq = remover(arvore->esq, arvore->valor);
     return arvore;
   }
 
@@ -133,14 +127,14 @@ raiz* remover(raiz *arvore, int num){
 int main(void){
   int op, num;
   raiz *arvore = NULL;
-  
+  /*
   inserirFolha(&arvore, 5);
   inserirFolha(&arvore, 10);
   inserirFolha(&arvore, 20);
   inserirFolha(&arvore, 3);
   inserirFolha(&arvore, 1);
   inserirFolha(&arvore, 4);
-	
+	*/
   while (op = menu(), op != 4){
     switch(op){
       case 1:
