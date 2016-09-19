@@ -30,7 +30,7 @@ class Node{
 
 };
 
-typedef  int InfoType;
+typedef int InfoType;
 
 //Criar um árvore vazia;
 Node* CreateEmptyTree(){
@@ -245,4 +245,47 @@ Node* Balance(Node* node){
 	return node;
 }
 
+Node* maxNodeLeft(Node* root){
+    Node* current = root;
+ 	//Percorre até encontrar o maior a esquerda
+    while (current->right != NULL){
+        current = current->right;
+    }
+    return current;
+}
+
+Node* remove(InfoType value, Node *root){
+	
+	if (root == NULL) return root;
+
+	if (value < root->value){
+		root->left = remove(value, root->left);
+	
+	}else if(value > root->value){
+		root->right = remove(value, root->right);
+	
+	}else{
+		//Com somente uma folha ou nenhuma;
+		if ((root->left == NULL) || (root->right == NULL) ){
+			Node *temp = root->left ? root->left : root->right;
+
+			if (temp == NULL){
+				temp = root;
+				root = NULL;
+			}else{
+				*root = *temp;
+			}
+			free(temp);
+		}else{
+			Node *temp = maxNodeLeft(root->left);
+			root->value = temp->value;
+			root->left = remove(root->value, root->left);
+		}
+	}
+	if (root == NULL) return root;
+
+	root = Balance(root);
+
+	return root;
+}
 
